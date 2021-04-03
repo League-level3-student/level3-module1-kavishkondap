@@ -1,6 +1,12 @@
 package _00_Intro_To_ArrayLists;
 
-public class _02_GuestBook {
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class _02_GuestBook implements ActionListener {
     /*
      * Create a GUI with two buttons. One button reads "Add Name" and the other
      * button reads "View Names". When the add name button is clicked, display
@@ -13,5 +19,18 @@ public class _02_GuestBook {
      * Guest #3: Greg Ganders
      * Guest #4: Donny Doners
      */
+	static JFrame frame = new JFrame ();
+	static JPanel panel = new JPanel ();
+	static JButton add = new JButton ();
+	static JButton view = new JButton ();
+	public static void main(String[] args) {
+		frame.add(panel);
+		panel.add(add);
+		panel.add(view);
+		frame.setVisible (true);
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		view.addActionListener(new _02_GuestBook ());
+		add.addActionListener(new _02_GuestBook ());
 
+	}
 }
