@@ -1,6 +1,9 @@
 package _07_California_Weather;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 
 /*
  * OBJECTIVE:
@@ -33,13 +36,52 @@ public class CaliforniaWeather {
         HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
         
         // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
-        WeatherData datum = weatherData.get(cityName);
-        
-        if( datum == null ) {
-            System.out.println("Unable to find weather data for: " + cityName);
-        } else {
-            System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
+//        String cityName = Utilities.capitalizeWords( "National City" );
+//        WeatherData datum = weatherData.get(cityName);
+        String objective = JOptionPane.showInputDialog(null, "Would you like to search for a city's weather? (Enter \"1\")"
+        		+ "\n Would you like to enter a weather condition? (Enter \"2\")"
+        		+ "\n Would you like to enter a min and max temp? (Enter \"3\")");
+        if (objective.equals("1")) {
+        	String city = JOptionPane.showInputDialog(null, "What city do you want the weather for?");
+        	city = Utilities.capitalizeWords(city);
+        	WeatherData data = weatherData.get(city);
+        	if( data == null ) {
+                System.out.println("Unable to find weather data for: " + city);
+            } else {
+                System.out.println(city + " is " + data.weatherSummary + " with a temperature of " + data.temperatureF + " F");
+            }
+        }else if (objective.equals("2")) {
+        	String cities = "";
+        	String weather = JOptionPane.showInputDialog(null, "Enter a weather condition to search for:");
+        	weather = Utilities.capitalizeWords(weather);
+        	for (String s : weatherData.keySet()) {
+        		if (weatherData.get(s).weatherSummary.equals(weather)) {
+        			cities += s + "\n";
+        		}
+        	}
+        	if (cities.equals("")) {
+        		System.out.println("There are no cities with the entered weather statement"); 
+        	}else {
+        		System.out.println(cities);
+        	}
+        }else if (objective.equals("3")) {
+        	String cities = "";
+        	String minimum = JOptionPane.showInputDialog(null, "Enter a min temp:");
+        	String maximum = JOptionPane.showInputDialog(null, "Enter a max temp:");
+        	int min = Integer.parseInt(minimum);
+        	int max = Integer.parseInt(maximum);
+        	for (String s : weatherData.keySet()) {
+        		if (weatherData.get(s).temperatureF >= min && weatherData.get(s).temperatureF <= max) {
+        			cities += s + "\n";
+        		}
+        	}
+        	if (cities.equals ("")) {
+            	System.out.println("There are no cities within that temperature range");
+        	}else {
+        		System.out.println(cities);
         }
+        
+        }
+        
     }
 }

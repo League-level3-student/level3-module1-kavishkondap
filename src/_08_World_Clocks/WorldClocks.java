@@ -6,7 +6,9 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
@@ -42,10 +44,12 @@ public class WorldClocks implements ActionListener {
     JFrame frame;
     JPanel panel;
     JTextArea textArea;
+    JButton button;
     
     String city;
     String dateStr;
     String timeStr;
+    String cityAdded;
     
     public WorldClocks() {
         clockUtil = new ClockUtilities();
@@ -65,11 +69,14 @@ public class WorldClocks implements ActionListener {
         frame = new JFrame();
         panel = new JPanel();
         textArea = new JTextArea();
+        button = new JButton ("Add City");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(100, 100);
         frame.add(panel);
         panel.add(textArea);
+        panel.add(button);
+        button.addActionListener(this);
         textArea.setText(city + "\n" + dateStr);
         
         // This Timer object is set to call the actionPerformed() method every
@@ -80,6 +87,10 @@ public class WorldClocks implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
+    	if (arg0.getSource() == button) {
+    		cityAdded = JOptionPane.showInputDialog(null, "Which city would you like to add? (Enter in the form city, COUNTRY)");
+    		
+    	}
         Calendar c = Calendar.getInstance(timeZone);
         String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
         String twelveHourTime = " [" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND) + "]";
